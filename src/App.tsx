@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
 
+//packages
+import { Typography, Toolbar, AppBar } from "@material-ui/core";
+
+// hooks
 import { usePokemonFetch } from "./hooks";
 
 const App: React.FC = () => {
@@ -9,6 +13,13 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      <AppBar position="static">
+        <Toolbar>
+          <Typography component="h1" variant="h6">
+            React Hook Practice
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <input
         type="text"
         onChange={e => setQuery(e.target.value)}
