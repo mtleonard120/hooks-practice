@@ -4,13 +4,11 @@ import { useState } from "react";
 import axios from "axios";
 
 // types
-export interface IUseAxiosProps {
+export interface IUseAxiosProps<T = any> {
   url: string;
   method: "get" | "post";
-  //   data?: T;
+  data?: T;
 }
-
-// THIS HOOK KINDA SUCKS AS_IS NEEDS SOME WORK
 
 export const useAxios = (props: IUseAxiosProps) => {
   const { url, method } = props;
