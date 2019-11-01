@@ -1,27 +1,36 @@
 import React, { useState } from "react";
 
 // hooks
-import { usePokemonFetch } from "../../../hooks";
+import { usePokemonFetch, useDebounce } from "../../../hooks";
 
 // components
 import { Demo } from "../../reusuables";
-
-// styles
-import styles from "./PokemonFetchDemo.module.scss";
 
 // types
 export interface IPokemonFetchDemoProps {}
 
 export const PokemonFetchDemo: React.FC<IPokemonFetchDemoProps> = props => {
   const [query, setQuery] = useState("");
-  const { loading, error, data } = usePokemonFetch(query);
+  const debouncedQuery = useDebounce(query, 500);
+  const { loading, error, data } = usePokemonFetch(debouncedQuery);
 
   return (
-    <Demo title="Fetching Hook">
+    <Demo title="Debounced Fetching">
       <p>
         In this demo, you can enter a query for a pokemon (names or numbers
-        work).
+        work). There are two hooks being shown off here:
       </p>
+      <ul>
+        <li>
+          Fetching hook: hits the pokemon api upon an update in the query input,
+          returning an object with a loading flag, an error message, and data.
+        </li>
+        <li>
+          Debounce hook: tracks a state value which may update frequently and
+          only updates itself after the tracked value has stopped updating for
+          some time.
+        </li>
+      </ul>
       <div>
         <label htmlFor="pokemonQuery">Pokemon Query: </label>
         <input
