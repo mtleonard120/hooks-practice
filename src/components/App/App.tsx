@@ -15,7 +15,7 @@ export const App: React.FC = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography component="h1" variant="h6">
-            React Hook Practice
+            React Hooks Practice
           </Typography>
         </Toolbar>
       </AppBar>
