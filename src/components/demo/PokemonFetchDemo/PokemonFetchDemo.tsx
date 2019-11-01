@@ -18,11 +18,19 @@ export const PokemonFetchDemo: React.FC<IPokemonFetchDemoProps> = props => {
 
   return (
     <Demo title="Fetching Hook">
-      <input
-        type="text"
-        onChange={e => setQuery(e.target.value)}
-        value={query}
-      />
+      <p>
+        In this demo, you can enter a query for a pokemon (names or numbers
+        work).
+      </p>
+      <div>
+        <label htmlFor="pokemonQuery">Pokemon Query: </label>
+        <input
+          type="text"
+          id="pokemonQuery"
+          onChange={e => setQuery(e.target.value)}
+          value={query}
+        />
+      </div>
       <div>
         {error && <div>{error}</div>}
         {loading && <div>Loading...</div>}
