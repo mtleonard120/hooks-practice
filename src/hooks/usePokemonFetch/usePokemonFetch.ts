@@ -32,6 +32,8 @@ export const usePokemonFetch = (query: string) => {
   // Make the fetch every time we have an updated query
   useEffect(() => {
     if (!query) {
+      setData(undefined);
+      setError(undefined);
       return;
     }
 

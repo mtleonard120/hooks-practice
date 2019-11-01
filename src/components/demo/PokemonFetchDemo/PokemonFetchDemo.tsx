@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 
-// hooks
-import { usePokemonFetch, useDebounce } from "../../../hooks";
-
 // components
 import { Demo } from "../../reusuables";
+import { DemoContent } from "./DemoContent";
 
 // types
 export interface IPokemonFetchDemoProps {}
 
 export const PokemonFetchDemo: React.FC<IPokemonFetchDemoProps> = props => {
-  const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounce(query, 500);
-  const { loading, error, data } = usePokemonFetch(debouncedQuery);
+  const [delay, setDelay] = useState("500");
 
   return (
     <Demo title="Debounced Fetching">
@@ -31,20 +27,20 @@ export const PokemonFetchDemo: React.FC<IPokemonFetchDemoProps> = props => {
           some time.
         </li>
       </ul>
-      <div>
-        <label htmlFor="pokemonQuery">Pokemon Query: </label>
-        <input
-          type="text"
-          id="pokemonQuery"
-          onChange={e => setQuery(e.target.value)}
-          value={query}
-        />
-      </div>
-      <div>
-        {error && <div>{error}</div>}
-        {loading && <div>Loading...</div>}
-        {data && <div>Pokemon Name: {data.name}</div>}
-      </div>
+
+      <p>
+        <strong>Adjustable Params</strong>
+        <div>
+          <label htmlFor="delay">Debounce delay (in ms): </label>
+          <input
+            type="number"
+            id="delay"
+            onChange={e => setDelay(e.target.value)}
+            value={delay}
+          />
+        </div>
+      </p>
+      <DemoContent debounceDelay={delay} />
     </Demo>
   );
 };
