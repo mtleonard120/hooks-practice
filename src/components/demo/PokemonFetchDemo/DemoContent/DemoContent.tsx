@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { usePokemonFetch, useDebounce } from "../../../../hooks";
 
 // styles
-import styles from "./DemoContent.module.scss";
+import { TextField } from "@material-ui/core";
 
 // types
 export interface IDemoContentProps {
@@ -17,13 +17,15 @@ export const DemoContent: React.FC<IDemoContentProps> = props => {
   const { loading, error, data } = usePokemonFetch(debouncedQuery);
 
   return (
-    <div className={styles.content}>
+    <div>
       <div>
-        <label htmlFor="pokemonQuery">Pokemon Query: </label>
-        <input
-          type="text"
+        <TextField
           id="pokemonQuery"
+          label="Pokemon Query"
+          margin="normal"
           onChange={e => setQuery(e.target.value)}
+          type="text"
+          variant="outlined"
           value={query}
         />
       </div>

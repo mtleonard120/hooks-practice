@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // components
 import { Demo } from "../../reusuables";
 import { DemoContent } from "./DemoContent";
+import { TextField } from "@material-ui/core";
 
 // types
 export interface IPokemonFetchDemoProps {}
@@ -31,15 +32,18 @@ export const PokemonFetchDemo: React.FC<IPokemonFetchDemoProps> = props => {
       <p>
         <strong>Adjustable Params</strong>
         <div>
-          <label htmlFor="delay">Debounce delay (in ms): </label>
-          <input
-            type="number"
+          <TextField
             id="delay"
+            label="Debounce Delay (ms)"
+            margin="normal"
             onChange={e => setDelay(e.target.value)}
+            type="number"
+            variant="outlined"
             value={delay}
           />
         </div>
       </p>
+      <strong>Demo</strong>
       <DemoContent debounceDelay={delay} />
     </Demo>
   );
