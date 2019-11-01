@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+
+import { usePokemonFetch } from "./hooks";
 
 const App: React.FC = () => {
+  const [query, setQuery] = useState("");
+  const { loading, error, data } = usePokemonFetch(query);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="text"
+        onChange={e => setQuery(e.target.value)}
+        value={query}
+      />
+      <div>
+        {error && <p>{error}</p>}
+        {loading && <p>Loading...</p>}
+        {data && <p>Pokemon Name: {data.name}</p>}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
