@@ -1,50 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-// packages
-import axios, { AxiosResponse } from "axios";
+// hooks
+import { useAxios } from "..";
+
+// types
+import { PokeResult } from "./pokeapi";
 
 export const usePokemonFetch = (query: string) => {
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState();
-  const [error, setError] = useState();
+  const [{ data, loading, error }, fetch] = useAxios<string, PokeResult>(
+    "https://pokeapi.co/api/v2/pokemon/" + query.toLowerCase()
+  );
 
-  const beginNewCall = () => {
-    setLoading(true);
-    setData(undefined);
-    setError(undefined);
-  };
-
-  const onSuccess = (res: AxiosResponse) => {
-    console.log(res.data);
-    setData(res.data);
-  };
-
-  const onError = (res: AxiosResponse) => {
-    const code = res.request.status;
-    const message = code === 404 ? "No Pokemon Found" : "Something went wrong";
-    setError(message);
-  };
-
-  const onFinally = () => {
-    setLoading(false);
-  };
-
-  // Make the fetch every time we have an updated query
   useEffect(() => {
-    if (!query) {
-      setData(undefined);
-      setError(undefined);
-      return;
+    // prevent empty query calls
+    if (query) {
+      fetch();
     }
+  }, [query, fetch]);
 
-    beginNewCall();
-
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon/" + query.toLowerCase())
-      .then(onSuccess)
-      .catch(onError)
-      .finally(onFinally);
-  }, [query]);
-
-  return { error, loading, data };
+  return { data, error, loading };
 };

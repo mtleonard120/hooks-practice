@@ -30,7 +30,7 @@ export const DemoContent: React.FC<IDemoContentProps> = props => {
         />
       </div>
       <div>
-        {error && <div>Error: {error}</div>}
+        {error && <div>Error: {error.message}</div>}
         {loading && <div>Loading...</div>}
         {data && <div>Pokemon Found: {data.name}</div>}
       </div>
