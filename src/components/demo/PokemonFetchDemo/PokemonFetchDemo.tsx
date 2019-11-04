@@ -5,6 +5,9 @@ import { Demo } from "../../reusuables";
 import { DemoContent } from "./DemoContent";
 import { TextField } from "@material-ui/core";
 
+// styles
+import styles from "./PokemonFetchDemo.module.scss";
+
 // types
 export interface IPokemonFetchDemoProps {}
 
@@ -29,7 +32,7 @@ export const PokemonFetchDemo: React.FC<IPokemonFetchDemoProps> = props => {
         </li>
       </ul>
 
-      <p>
+      <div className={styles.params}>
         <strong>Adjustable Params</strong>
         <div>
           <TextField
@@ -42,7 +45,7 @@ export const PokemonFetchDemo: React.FC<IPokemonFetchDemoProps> = props => {
             value={delay}
           />
         </div>
-      </p>
+      </div>
       <strong>Demo</strong>
       <DemoContent debounceDelay={delay} />
     </Demo>
