@@ -13,7 +13,10 @@ export interface IDemoContentProps {
 
 export const DemoContent: React.FC<IDemoContentProps> = props => {
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounce(query, Number(props.debounceDelay) || 500);
+  const debouncedQuery = useDebounce(
+    query,
+    props.debounceDelay ? Number(props.debounceDelay) : 500
+  );
   const { loading, error, data } = usePokemonFetch(debouncedQuery);
 
   return (
