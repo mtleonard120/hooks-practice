@@ -1,14 +1,24 @@
 import { useEffect } from "react";
 
-// hooks
-import { useAxios } from "..";
+// packages
+import useAxios from "axios-hooks";
 
 // types
 import { PokeResult } from "./pokeapi";
+import { AxiosError } from "axios";
 
-export const usePokemonFetch = (query: string) => {
-  const [{ data, loading, error }, fetch] = useAxios<string, PokeResult>(
-    "https://pokeapi.co/api/v2/pokemon/" + query.toLowerCase()
+export interface IPokeFetchResult {
+  data?: PokeResult;
+  error?: AxiosError<any>;
+  loading: boolean;
+}
+
+export const usePokemonFetch = (query: string): IPokeFetchResult => {
+  const [{ data, loading, error }, fetch] = useAxios<PokeResult | undefined>(
+    "https://pokeapi.co/api/v2/pokemon/" + query.toLowerCase(),
+    {
+      manual: true
+    }
   );
 
   useEffect(() => {

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
 // hooks
-import { usePokemonFetch, useDebounce } from "../../../../hooks";
+import {
+  usePokemonFetch,
+  useDebounce,
+  IPokeFetchResult
+} from "../../../../hooks";
 
 // styles
 import { TextField } from "@material-ui/core";
@@ -11,13 +15,28 @@ export interface IDemoContentProps {
   debounceDelay?: string;
 }
 
+// helpers
+const PokeFetchResult = ({ data, error, loading }: IPokeFetchResult) => {
+  return (
+    <div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error: {error.message}</div>
+      ) : (
+        data && <div>Pokemon Found: {data.name}</div>
+      )}
+    </div>
+  );
+};
+
 export const DemoContent: React.FC<IDemoContentProps> = props => {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(
     query,
     props.debounceDelay ? Number(props.debounceDelay) : 500
   );
-  const { loading, error, data } = usePokemonFetch(debouncedQuery);
+  const fetchState = usePokemonFetch(debouncedQuery);
 
   return (
     <div>
@@ -32,11 +51,7 @@ export const DemoContent: React.FC<IDemoContentProps> = props => {
           value={query}
         />
       </div>
-      <div>
-        {error && <div>Error: {error.message}</div>}
-        {loading && <div>Loading...</div>}
-        {data && <div>Pokemon Found: {data.name}</div>}
-      </div>
+      <PokeFetchResult {...fetchState} />
     </div>
   );
 };
